@@ -1,0 +1,299 @@
+/* MRT文創古亭6號 預約系統樣式 */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Noto Sans TC', sans-serif, Arial;
+  background: #f5f7fa;
+  color: #333;
+  min-height: 100vh;
+}
+
+/* Header */
+header {
+  background: linear-gradient(135deg, #1a3a5c 0%, #2d6a9f 100%);
+  color: white;
+  padding: 24px 16px;
+  text-align: center;
+}
+header h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+header .subtitle {
+  margin-top: 8px;
+  font-size: 1rem;
+  opacity: 0.85;
+}
+
+/* Main */
+main {
+  max-width: 800px;
+  margin: 32px auto;
+  padding: 0 16px;
+}
+
+/* Steps */
+.step {
+  display: none;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+  padding: 28px 24px;
+  margin-bottom: 24px;
+}
+.step.active {
+  display: block;
+}
+.step h2 {
+  font-size: 1.25rem;
+  color: #1a3a5c;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #e8f0f8;
+}
+
+/* Space Cards */
+.space-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+.space-card {
+  border: 2px solid #e0e8f0;
+  border-radius: 10px;
+  padding: 20px 16px;
+  text-align: center;
+  transition: all 0.2s;
+}
+.space-card:hover {
+  border-color: #2d6a9f;
+  box-shadow: 0 4px 12px rgba(45,106,159,0.15);
+}
+.space-card h3 {
+  font-size: 1.2rem;
+  color: #1a3a5c;
+  margin-bottom: 10px;
+}
+.space-card .price {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #e05c2a;
+  margin-bottom: 8px;
+}
+.space-card .note {
+  font-size: 0.85rem;
+  color: #888;
+  margin-bottom: 12px;
+}
+.space-card .calendar-link {
+  display: inline-block;
+  margin-bottom: 12px;
+  color: #2d6a9f;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+.space-card .calendar-link:hover {
+  text-decoration: underline;
+}
+.select-btn {
+  width: 100%;
+  padding: 10px;
+  background: #2d6a9f;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+.select-btn:hover {
+  background: #1a3a5c;
+}
+
+/* Form */
+.form-group {
+  margin-bottom: 16px;
+}
+.form-group label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 6px;
+}
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid #d0d8e4;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: border-color 0.2s;
+  background: white;
+}
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #2d6a9f;
+}
+.form-group input[readonly] {
+  background: #f0f4f8;
+  color: #2d6a9f;
+  font-weight: 600;
+}
+.time-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* Invoice fields */
+.invoice-fields {
+  background: #f8fbff;
+  border: 1px dashed #c0d4e8;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+/* Price summary */
+.price-summary {
+  background: #fff8f0;
+  border: 1px solid #ffd9a0;
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin: 16px 0;
+  font-size: 1rem;
+}
+.price-summary strong {
+  color: #e05c2a;
+  font-size: 1.2rem;
+}
+
+/* LINE */
+.line-hint {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 10px;
+}
+.line-btn {
+  width: 100%;
+  padding: 12px;
+  background: #06C755;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-bottom: 16px;
+}
+.line-btn:hover {
+  background: #05a847;
+}
+.line-success {
+  color: #06C755;
+  font-weight: 600;
+  margin-bottom: 16px;
+  font-size: 0.95rem;
+}
+
+/* Action Buttons */
+.next-btn, .pay-btn {
+  width: 100%;
+  padding: 14px;
+  background: #e05c2a;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 8px;
+}
+.next-btn:hover, .pay-btn:hover {
+  background: #c04a1f;
+}
+.back-btn {
+  width: 100%;
+  padding: 10px;
+  background: transparent;
+  color: #2d6a9f;
+  border: 2px solid #2d6a9f;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.2s;
+}
+.back-btn:hover {
+  background: #2d6a9f;
+  color: white;
+}
+
+/* Order Summary */
+#orderSummary {
+  background: #f8fbff;
+  border: 1px solid #c0d4e8;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  line-height: 2;
+}
+#orderSummary p {
+  display: flex;
+  justify-content: space-between;
+}
+#orderSummary strong {
+  color: #1a3a5c;
+}
+
+/* Notice Section */
+.notice-section {
+  background: #fffdf0;
+  border: 1px solid #f0d080;
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin-top: 24px;
+}
+.notice-section h3 {
+  color: #b8860b;
+  margin-bottom: 12px;
+  font-size: 1rem;
+  letter-spacing: 1px;
+}
+.notice-content p {
+  font-size: 0.88rem;
+  color: #555;
+  margin-bottom: 6px;
+  line-height: 1.6;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 20px;
+  color: #888;
+  font-size: 0.85rem;
+}
+footer a {
+  color: #2d6a9f;
+  text-decoration: none;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  header h1 { font-size: 1.4rem; }
+  .step { padding: 20px 14px; }
+  .time-group { grid-template-columns: 1fr; }
+  .space-cards { grid-template-columns: 1fr; }
+}
