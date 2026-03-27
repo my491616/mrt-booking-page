@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MRT文創古亭6號｜空間預約</title>
+  <link rel="stylesheet" href="style.css">
+  <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <h1>🏢 MRT文創古亭6號</h1>
+      <p class="subtitle">空間預約系統</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- STEP 1: 選擇空間 -->
+    <section id="step1" class="step active">
+      <h2>Step 1｜選擇空間</h2>
+      <div class="space-cards">
+        <div class="space-card" data-space="01" data-price="1000">
+          <h3>空間 01</h3>
+          <p class="price">NT$1,000 / 4小時</p>
+          <p class="note">最小單位：30分鐘</p>
+          <a class="calendar-link" href="https://calendar.google.com/calendar/embed?src=kimoyam%40gmail.com" target="_blank">📅 查看空檔日曆</a>
+          <button class="select-btn" onclick="selectSpace('01', 1000)">選擇此空間</button>
+        </div>
+        <div class="space-card" data-space="02" data-price="1800">
+          <h3>空間 02</h3>
+          <p class="price">NT$1,800 / 4小時</p>
+          <p class="note">最小單位：30分鐘</p>
+          <a class="calendar-link" href="https://calendar.google.com/calendar/embed?src=kimoyam%40gmail.com" target="_blank">📅 查看空檔日曆</a>
+          <button class="select-btn" onclick="selectSpace('02', 1800)">選擇此空間</button>
+        </div>
+        <div class="space-card" data-space="03" data-price="1800">
+          <h3>空間 03</h3>
+          <p class="price">NT$1,800 / 4小時</p>
+          <p class="note">最小單位：30分鐘</p>
+          <a class="calendar-link" href="https://calendar.google.com/calendar/embed?src=kimoyam%40gmail.com" target="_blank">📅 查看空檔日曆</a>
+          <button class="select-btn" onclick="selectSpace('03', 1800)">選擇此空間</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 2: 填寫預約資料 -->
+    <section id="step2" class="step">
+      <h2>Step 2｜填寫預約資料</h2>
+      <form id="bookingForm">
+        <div class="form-group">
+          <label>已選空間</label>
+          <input type="text" id="selectedSpace" readonly>
+        </div>
+        <div class="form-group">
+          <label>姓名 *</label>
+          <input type="text" id="name" placeholder="請輸入姓名" required>
+        </div>
+        <div class="form-group">
+          <label>手機號碼 *</label>
+          <input type="tel" id="phone" placeholder="09XXXXXXXX" required>
+        </div>
+        <div class="form-group">
+          <label>Email *</label>
+          <input type="email" id="email" placeholder="your@email.com" required>
+        </div>
+        <div class="form-group">
+          <label>預約日期 *</label>
+          <input type="date" id="bookingDate" required>
+        </div>
+        <div class="form-group time-group">
+          <div>
+            <label>開始時間 *</label>
+            <select id="startTime" required></select>
+          </div>
+          <div>
+            <label>結束時間 *</label>
+            <select id="endTime" required></select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>發票類型 *</label>
+          <select id="invoiceType" onchange="toggleInvoiceFields()" required>
+            <option value="">請選擇</option>
+            <option value="personal">個人</option>
+            <option value="company">公司</option>
+          </select>
+        </div>
+        <div id="personalFields" class="invoice-fields" style="display:none">
+          <div class="form-group">
+            <label>手機條碼（選填）</label>
+            <input type="text" id="mobileBarcode" placeholder="/XXXXXXX">
+          </div>
+        </div>
+        <div id="companyFields" class="invoice-fields" style="display:none">
+          <div class="form-group">
+            <label>公司名稱 *</label>
+            <input type="text" id="companyName" placeholder="請輸入公司名稱">
+          </div>
+          <div class="form-group">
+            <label>統一編號 *</label>
+            <input type="text" id="taxId" placeholder="請輸入統一編號（8碼）">
+          </div>
+        </div>
+
+        <div class="price-summary">
+          <p>預估金額：<strong id="estimatedPrice">計算中...</strong></p>
+        </div>
+
+        <div id="lineLoginArea">
+          <p class="line-hint">請先登入 LINE 以完成預約</p>
+          <button type="button" class="line-btn" onclick="liffLogin()">🔑 LINE 登入</button>
+        </div>
+        <div id="lineLoggedIn" style="display:none">
+          <p class="line-success">✅ LINE 已登入：<span id="lineDisplayName"></span></p>
+        </div>
+
+        <button type="button" class="next-btn" onclick="goToPayment()">確認並前往付款 →</button>
+      </form>
+    </section>
+
+    <!-- STEP 3: 付款確認 -->
+    <section id="step3" class="step">
+      <h2>Step 3｜確認付款</h2>
+      <div id="orderSummary"></div>
+      <button class="pay-btn" onclick="submitPayment()">💳 前往綠界付款</button>
+      <button class="back-btn" onclick="goBack(2)">← 返回修改</button>
+    </section>
+
+    <!-- 注意事項 -->
+    <section class="notice-section">
+      <h3>***敬請配合事項***</h3>
+      <div class="notice-content">
+        <p><<<進入12樓梯廳 公共走道 請放低音量 避免擾鄰 謝謝配合>>></p>
+        <p>A. 進場時段未達請勿提前入場。</p>
+        <p>B. 時段結束敬請配合準時離場，避免逾時 30分鐘內加計費用600元整。</p>
+        <p>C. 垃圾桶僅提供小量垃圾，請勿落地。</p>
+        <p>D. 若需要場佈或延長請提早告知。</p>
+        <p>🏢 &lt;MRT古亭六號空間&gt; 以全自助式維持CP值與設備，感謝您的配合。</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© MRT文創古亭6號｜<a href="https://newmrt6.mystrikingly.com/" target="_blank">官方網站</a></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
