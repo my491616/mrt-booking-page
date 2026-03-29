@@ -1,7 +1,7 @@
 // MRT文創古亭6號 預約系統前端邏輯
 // ====================================================
 // 請在部署後修改以下設定
-const GAS_URL = 'YOUR_GAS_WEB_APP_URL_HERE'; // Google Apps Script 部署網址h
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbzzVTvIZjpXRchnGakV0cLkKPV7dw0CTCUDTaqBOJwUtWr-QlLRUmtcfuo5WczLUfoj/exec'; // Google Apps Script 部署網址h
 const LIFF_ID = '2009635101-d0mK0ubr';          // LINE LIFF ID
 
 // ====================================================
@@ -249,7 +249,7 @@ function goToPayment() {
 // ====================================================
 // 送出付款（呼叫 GAS 取得綠界付款連結）
 async function submitPayment() {
-  if (GAS_URL === 'YOUR_GAS_WEB_APP_URL_HERE') {
+  if (GAS_URL === 'https://script.google.com/macros/s/AKfycbzzVTvIZjpXRchnGakV0cLkKPV7dw0CTCUDTaqBOJwUtWr-QlLRUmtcfuo5WczLUfoj/exec') {
     alert('系統尚未設定，請聯絡管理員');
     return;
   }
