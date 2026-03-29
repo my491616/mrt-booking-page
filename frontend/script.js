@@ -1,8 +1,8 @@
 // MRT文創古亭6號 預約系統前端邏輯
 // ====================================================
 // 請在部署後修改以下設定
-const GAS_URL = 'YOUR_GAS_WEB_APP_URL_HERE'; // Google Apps Script 部署網址
-const LIFF_ID = 'YOUR_LIFF_ID_HERE';          // LINE LIFF ID
+const GAS_URL = 'YOUR_GAS_WEB_APP_URL_HERE'; // Google Apps Script 部署網址h
+const LIFF_ID = '2009635101-d0mK0ubr';          // LINE LIFF ID
 
 // ====================================================
 // 全域狀態
@@ -111,7 +111,7 @@ function updatePrice() {
 // ====================================================
 // LIFF 初始化
 async function initLiff() {
-  if (LIFF_ID === 'YOUR_LIFF_ID_HERE') return; // 尚未設定
+  if (LIFF_ID === '2009635101-d0mK0ubr') return; // 尚未設定
   try {
     await liff.init({ liffId: LIFF_ID });
     if (liff.isLoggedIn()) {
@@ -126,7 +126,7 @@ async function initLiff() {
 }
 
 async function liffLogin() {
-  if (LIFF_ID === 'YOUR_LIFF_ID_HERE') {
+  if (LIFF_ID === '2009635101-d0mK0ubr') {
     alert('請先設定 LIFF ID（需完成後台設定）');
     return;
   }
