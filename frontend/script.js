@@ -248,10 +248,10 @@ async function submitPayment() {
     btn.textContent = '處理中...';
     btn.disabled = true;
     try {
-          const response = await fetch(GAS_URL + '?action=createBooking', {
+                  const payload = JSON.stringify(Object.assign({}, bookingData, { action: 'createBooking' }));
+                const response = await fetch(GAS_URL, {
                   method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify(bookingData)
+                              body: payload
           });
           const result = await response.json();
           if (result.success && result.paymentUrl) {
