@@ -1,3 +1,36 @@
+
+
+/* LINE 官方帳號區塊 */
+.line-oa-section {
+  background: #f0fff4;
+  border: 1px solid #06C755;
+  border-radius: 12px;
+  margin: 20px 0;
+  padding: 20px;
+  text-align: center;
+}
+
+.line-oa-title {
+  font-size: 1em;
+  color: #333;
+  margin: 0 0 12px;
+}
+
+.line-oa-btn {
+  display: inline-block;
+  background: #06C755;
+  color: white;
+  padding: 10px 24px;
+  border-radius: 24px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1em;
+  transition: background 0.2s;
+}
+
+.line-oa-btn:hover {
+  background: #05a847;
+}
 /* MRT文創古亭6號 預約系統樣式 */
 * {
   box-sizing: border-box;
