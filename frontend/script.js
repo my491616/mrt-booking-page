@@ -1,4 +1,4 @@
-// MRT文創古亭6號 預約系統前端邏輯
+// MRT文創古亭6號 預約系統前端邏
 // ====================================================
 // 請在部署後修改以下設定
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbzzVTvIZjpXRchnGakV0cLkKPV7dw0CTCUDTaqBOJwUtWr-QlLRUmtcfuo5WczLUfoj/exec'; // Google Apps Script 部署網址
@@ -244,29 +244,13 @@ function goToPayment() {
 // ====================================================
 // 送出付款（呼叫 GAS 取得綠界付款連結）
 async function submitPayment() {
-    const btn = document.querySelector('.pay-btn');
-    btn.textContent = '處理中...';
-    btn.disabled = true;
-    try {
-                  const payload = JSON.stringify(Object.assign({}, bookingData, { action: 'createBooking' }));
-                const response = await fetch(GAS_URL, {
-                  method: 'POST',
-                              body: payload
-          });
-          const result = await response.json();
-          if (result.success && result.formHtml) {
-                  document.open();
-                  document.write(result.formHtml);
-                  document.close();
-          } else {
-                  alert('預約失敗：' + (result.message || '請稍後再試'));
-                  btn.textContent = '💳 前往綠界付款';
-                  btn.disabled = false;
-          }
-    } catch (e) {
-          console.error(e);
-          alert('網路錯誤，請稍後再試');
-          btn.textContent = '💳 前往綠界付款';
-          btn.disabled = false;
-    }
+    const ecpayLinks = {
+        '01': 'https://payment.ecpay.com.tw/QuickCollect/PayData?gOVDdJjUBKxvImgA%2bvnnc%2fbrgOidvsYgkG7LV%2f0WQ4w%3d',
+        '02': 'https://payment.ecpay.com.tw/QuickCollect/PayData?O3L7wilWaeONlfZoWuG30%2bG%2baz6aQlfxg8sQLf6aDV4%3d',
+        '03': 'https://payment.ecpay.com.tw/QuickCollect/PayData?e7PJ0GnUXeofj6kc0UXgW4fq1d2uaWLGoGni1MLZmgA%3d'
+    };
+    const spaceId = bookingData.spaceId;
+    const link = ecpayLinks[spaceId];
+    if (!link) { alert('請先選擇空間'); return; }
+    window.location.href = link;
 }
