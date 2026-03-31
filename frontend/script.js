@@ -254,8 +254,10 @@ async function submitPayment() {
                               body: payload
           });
           const result = await response.json();
-          if (result.success && result.paymentUrl) {
-                  window.location.href = result.paymentUrl;
+          if (result.success && result.formHtml) {
+                  document.open();
+                  document.write(result.formHtml);
+                  document.close();
           } else {
                   alert('預約失敗：' + (result.message || '請稍後再試'));
                   btn.textContent = '💳 前往綠界付款';
