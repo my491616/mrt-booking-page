@@ -2,7 +2,7 @@
 // ====================================================
 // 請在部署後修改以下設定
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbzzVTvIZjpXRchnGakV0cLkKPV7dw0CTCUDTaqBOJwUtWr-QlLRUmtcfuo5WczLUfoj/exec'; // Google Apps Script 部署網址
-const LIFF_ID = '2009635101-d0mK0ubr'; // LINE LIFF ID
+const LIFF_ID = '2009661888-rmnfz4u2'; // LINE LIFF ID
 
 // ====================================================
 // 全域狀態
