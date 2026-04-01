@@ -253,5 +253,23 @@ async function submitPayment() {
     const spaceId = bookingData.spaceId;
     const link = ecpayLinks[spaceId];
     if (!link) { alert('請先選擇空間'); return; }
+    // 呼叫 GAS 建立 Google Calendar 行程
+    fetch('https://script.google.com/macros/s/AKfycbyh6aQJzjrTG72xw78AfdoHmTzHxn_IScIxd2XhP0CeOxnRM2TX0QK17hV-UORFR0Er/exec', {
+        method: 'POST', mode: 'no-cors',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            action: 'createBooking',
+            spaceId: bookingData.spaceId,
+            spaceName: bookingData.spaceName,
+            name: bookingData.name,
+            phone: bookingData.phone,
+            email: bookingData.email,
+            date: bookingData.date,
+            startTime: bookingData.startTime,
+            endTime: bookingData.endTime,
+            amount: bookingData.estimatedTotal,
+            invoiceType: bookingData.invoiceType
+        })
+    }).catch(e => console.log(e));
     window.location.href = link;
 }
