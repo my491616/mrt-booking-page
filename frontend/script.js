@@ -1,4 +1,4 @@
-// MRT文創古亭6號 預約系統前端邏
+部署網址// MRT文創古亭6號 預約系統前端邏
 // ====================================================
 // 請在部署後修改以下設定
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbzzVTvIZjpXRchnGakV0cLkKPV7dw0CTCUDTaqBOJwUtWr-QlLRUmtcfuo5WczLUfoj/exec'; // Google Apps Script 部署網址
