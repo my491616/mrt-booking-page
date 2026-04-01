@@ -22,7 +22,8 @@ let bookingData = {
     taxId: '',
     lineUserId: '',
     lineDisplayName: '',
-    estimatedTotal: 0
+    estimatedTotal: 0,
+    eventTitle: ''
 };
 
 // ====================================================
