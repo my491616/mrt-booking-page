@@ -6,7 +6,7 @@ const LIFF_ID = '2009661888-rmnfz4u2'; // LINE LIFF ID
 
 // ====================================================
 // 全域狀態
-let bookingData = {
+var bookingData = {
     spaceId: '',
     spaceName: '',
     price: 0,
