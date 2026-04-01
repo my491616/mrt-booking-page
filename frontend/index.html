@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html
 <html lang="zh-TW">
 <head>
   <meta charset="UTF-8">
@@ -55,6 +55,16 @@
     <!-- STEP 2: 填寫預約資料 -->
     <section id="step2" class="step">
       <h2>Step 2｜填寫預約資料</h2>
+
+      <!-- LINE 登入（最先）-->
+      <div id="lineLoginArea" style="margin-bottom:16px;text-align:center">
+        <p class="line-hint">請先登入 LINE 以完成預約</p>
+        <button type="button" class="line-btn" onclick="liffLogin()">🔑 LINE 登入</button>
+      </div>
+      <div id="lineLoggedIn" style="display:none;margin-bottom:16px;text-align:center">
+        <p class="line-success">✅ LINE 已登入：<span id="lineDisplayName"></span></p>
+      </div>
+
       <form id="bookingForm">
         <div class="form-group">
           <label>已選空間</label>
@@ -71,6 +81,10 @@
         <div class="form-group">
           <label>Email *</label>
           <input type="email" id="email" placeholder="your@email.com" required>
+        </div>
+        <div class="form-group">
+          <label>活動主題 *</label>
+          <input type="text" id="eventTitle" placeholder="例：生日派對、公司會議、拍攝..." required>
         </div>
         <div class="form-group">
           <label>預約日期 *</label>
@@ -115,13 +129,7 @@
           <p>預估金額：<strong id="estimatedPrice">計算中...</strong></p>
         </div>
 
-        <div id="lineLoginArea">
-          <p class="line-hint">請先登入 LINE 以完成預約</p>
-          <button type="button" class="line-btn" onclick="liffLogin()">🔑 LINE 登入</button>
-        </div>
-        <div id="lineLoggedIn" style="display:none">
-          <p class="line-success">✅ LINE 已登入：<span id="lineDisplayName"></span></p>
-        </div>
+
 
         <button type="button" class="next-btn" onclick="goToPayment()">確認並前往付款 →</button>
       </form>
