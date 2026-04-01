@@ -1,7 +1,7 @@
 // MRT文創古亭6號 預約系統前端邏
 // ====================================================
 // 請在部署後修改以下設定
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbzzVTvIZjpXRchnGakV0cLkKPV7dw0CTCUDTaqBOJwUtWr-QlLRUmtcfuo5WczLUfoj/exec'; // Google Apps Script 部署網址
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbyh6aQJzjrTG72xw78AfdoHmTzHxn_IScIxd2XhP0CeOxnRM2TX0QK17hV-UORFR0Er/exec'; // Google Apps Script 部署網址
 const LIFF_ID = '2009661888-rmnfz4u2'; // LINE LIFF ID
 
 // ====================================================
