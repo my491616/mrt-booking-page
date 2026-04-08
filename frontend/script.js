@@ -243,33 +243,68 @@ function goToPayment() {
 }
 
 // ====================================================
-// 送出付款（呼叫 GAS 取得綠界付款連結）
+// 送出付款（呼叫 GAS createOrder 取得動態綠界參數，再 POST 跳轉）
 async function submitPayment() {
-    const ecpayLinks = {
-        '01': 'https://payment.ecpay.com.tw/QuickCollect/PayData?gOVDdJjUBKxvImgA%2bvnnc%2fbrgOidvsYgkG7LV%2f0WQ4w%3d',
-        '02': 'https://payment.ecpay.com.tw/QuickCollect/PayData?O3L7wilWaeONlfZoWuG30%2bG%2baz6aQlfxg8sQLf6aDV4%3d',
-        '03': 'https://payment.ecpay.com.tw/QuickCollect/PayData?e7PJ0GnUXeofj6kc0UXgW4fq1d2uaWLGoGni1MLZmgA%3d'
-    };
-    const spaceId = bookingData.spaceId;
-    const link = ecpayLinks[spaceId];
-    if (!link) { alert('請先選擇空間'); return; }
-    // 呼叫 GAS 建立 Google Calendar 行程
-    fetch('https://script.google.com/macros/s/AKfycbyh6aQJzjrTG72xw78AfdoHmTzHxn_IScIxd2XhP0CeOxnRM2TX0QK17hV-UORFR0Er/exec', {
-        method: 'POST', mode: 'no-cors',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-            action: 'createBooking',
-            spaceId: bookingData.spaceId,
-            spaceName: bookingData.spaceName,
-            name: bookingData.name,
-            phone: bookingData.phone,
-            email: bookingData.email,
-            date: bookingData.date,
-            startTime: bookingData.startTime,
-            endTime: bookingData.endTime,
-            amount: bookingData.estimatedTotal,
-            invoiceType: bookingData.invoiceType
-        })
-    }).catch(e => console.log(e));
-    window.location.href = link;
+    const btn = document.getElementById('submitBtn');
+    if (btn) { btn.disabled = true; btn.textContent = '處理中...'; }
+
+    try {
+        // 1. 呼叫 GAS 建立訂單，取得動態綠界付款參數
+        const res = await fetch(GAS_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                action: 'createOrder',
+                space: bookingData.spaceId,
+                date: bookingData.date,
+                startTime: bookingData.startTime,
+                endTime: bookingData.endTime,
+                name: bookingData.name,
+                phone: bookingData.phone,
+                email: bookingData.email,
+                amount: bookingData.estimatedTotal,
+                invoiceType: bookingData.invoiceType,
+                barcode: bookingData.mobileBarcode,
+                companyName: bookingData.companyName,
+                taxId: bookingData.taxId,
+                note: '',
+                lineUserId: bookingData.lineUserId,
+                lineDisplayName: bookingData.lineDisplayName
+            })
+        });
+
+        const data = await res.json();
+
+        if (data.status !== 'ok' || !data.ecpay) {
+            alert('建立訂單失敗：' + (data.message || '請稍後再試'));
+            if (btn) { btn.disabled = false; btn.textContent = '確認並付款'; }
+            return;
+        }
+
+        // 2. 動態建立 form，POST 到綠界 AioCheckOut
+        const ecpay = data.ecpay;
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = ecpay.endpoint;
+        form.style.display = 'none';
+
+        // 把所有參數（除了 endpoint）加入 form
+        const exclude = ['endpoint'];
+        Object.keys(ecpay).forEach(key => {
+            if (exclude.includes(key)) return;
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = key;
+            input.value = ecpay[key];
+            form.appendChild(input);
+        });
+
+        document.body.appendChild(form);
+        form.submit();
+
+    } catch (err) {
+        console.error('submitPayment error:', err);
+        alert('發生錯誤，請稍後再試：' + err.message);
+        if (btn) { btn.disabled = false; btn.textContent = '確認並付款'; }
+    }
 }
