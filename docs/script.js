@@ -5,7 +5,7 @@ const GAS_URL = 'https://script.google.com/macros/s/AKfycbxY_50GxceoJ1lsNqYL0DRG
 const LIFF_ID = '2009661888-rmnfz4u2'; // LINE LIFF ID
 
 // ===============================h=====================
-// 全域狀態
+// 全域狀態h
 var bookingData = {
     spaceId: '',
     spaceName: '',
@@ -247,47 +247,39 @@ function goToPayment() {
 async function submitPayment() {
     const btn = document.getElementById('submitBtn');
     if (btn) { btn.disabled = true; btn.textContent = '處理中...'; }
-
     try {
-        // 1. 呼叫 GAS 建立訂單，取得動態綠界付款參數
+        // 1. 使用 GET + ?data= 呼叫 GAS（繞過 CORS preflight）
         const payload = JSON.stringify({
-                action: 'createOrder',
-                space: bookingData.spaceId,
-                date: bookingData.date,
-                startTime: bookingData.startTime,
-                endTime: bookingData.endTime,
-                name: bookingData.name,
-                phone: bookingData.phone,
-                email: bookingData.email,
-                amount: bookingData.estimatedTotal,
-                invoiceType: bookingData.invoiceType,
-                barcode: bookingData.mobileBarcode,
-                companyName: bookingData.companyName,
-                taxId: bookingData.taxId,
-                note: '',
-                lineUserId: bookingData.lineUserId,
-                lineDisplayName: bookingData.lineDisplayName
-            });
-        const res = await fetch(GAS_URL + '?data=' + encodeURIComponent(payload), {
-            method: 'GET'
+            action: 'createOrder',
+            space: bookingData.spaceId,
+            date: bookingData.date,
+            startTime: bookingData.startTime,
+            endTime: bookingData.endTime,
+            name: bookingData.name,
+            phone: bookingData.phone,
+            email: bookingData.email,
+            amount: bookingData.estimatedTotal,
+            invoiceType: bookingData.invoiceType,
+            barcode: bookingData.mobileBarcode,
+            companyName: bookingData.companyName,
+            taxId: bookingData.taxId,
+            note: '',
+            lineUserId: bookingData.lineUserId,
+            lineDisplayName: bookingData.lineDisplayName
         });
-
+        const res = await fetch(GAS_URL + '?data=' + encodeURIComponent(payload), { method: 'GET' });
         const data = await res.json();
-
         if (data.status !== 'ok' || !data.ecpay) {
             alert('建立訂單失敗：' + (data.message || '請稍後再試'));
             if (btn) { btn.disabled = false; btn.textContent = '確認並付款'; }
             return;
         }
-
         // 2. 動態建立 form，POST 到綠界 AioCheckOut
         const ecpay = data.ecpay;
         const form = document.createElement('form');
         form.method = 'POST';
         form.action = ecpay.endpoint;
         form.style.display = 'none';
-
-        // 把所有參數（除了 endpoint）加入 form
         const exclude = ['endpoint'];
         Object.keys(ecpay).forEach(key => {
             if (exclude.includes(key)) return;
@@ -297,10 +289,8 @@ async function submitPayment() {
             input.value = ecpay[key];
             form.appendChild(input);
         });
-
         document.body.appendChild(form);
         form.submit();
-
     } catch (err) {
         console.error('submitPayment error:', err);
         alert('發生錯誤，請稍後再試：' + err.message);
