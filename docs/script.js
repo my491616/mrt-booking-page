@@ -4,7 +4,7 @@
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbxY_50GxceoJ1lsNqYL0DRGXoOe8j-9WjvHEgFcrjCt48k5PvsY7ph0Q5TIJnWwjH8G/exec'; // Google Apps Script 部署網址
 const LIFF_ID = '2009661888-rmnfz4u2'; // LINE LIFF ID
 
-// ====================================================
+// ===============================h=====================
 // 全域狀態
 var bookingData = {
     spaceId: '',
@@ -252,7 +252,7 @@ async function submitPayment() {
         // 1. 呼叫 GAS 建立訂單，取得動態綠界付款參數
         const res = await fetch(GAS_URL, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
             body: JSON.stringify({
                 action: 'createOrder',
                 space: bookingData.spaceId,
