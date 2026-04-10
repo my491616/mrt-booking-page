@@ -250,10 +250,7 @@ async function submitPayment() {
 
     try {
         // 1. 呼叫 GAS 建立訂單，取得動態綠界付款參數
-        const res = await fetch(GAS_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
-            body: JSON.stringify({
+        const payload = JSON.stringify({
                 action: 'createOrder',
                 space: bookingData.spaceId,
                 date: bookingData.date,
@@ -270,7 +267,9 @@ async function submitPayment() {
                 note: '',
                 lineUserId: bookingData.lineUserId,
                 lineDisplayName: bookingData.lineDisplayName
-            })
+            });
+        const res = await fetch(GAS_URL + '?data=' + encodeURIComponent(payload), {
+            method: 'GET'
         });
 
         const data = await res.json();
